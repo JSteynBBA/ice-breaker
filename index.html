@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Icebreaker Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            padding: 50px;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            height: 100px;
+            width: auto;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .section {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 700px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .response {
+            margin-top: 30px;
+            font-size: 20px;
+            color: #34495e;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BBA Logo -->
+    <img src="https://s3.amazonaws.com/careers4canada/Organization/03efa60e-528d-4cf5-bd63-ae1900f693f6/Images/020741f8-2569-405b-8775-03e4c95bbeb2.png" alt="BBA Logo" class="logo">
+
+    <h1>BBA Process Engineering Meeting Icebreaker</h1>
+
+    <!-- Unit Operation Section -->
+    <div class="section">
+        <h2>If I were a Unit Operation, which one would I be and why?</h2>
+        <button onclick="generateResponse()">Generate Unit Operation</button>
+        <div id="response" class="response"></div>
+    </div>
+
+    <!-- Metal/Commodity Section -->
+    <div class="section">
+        <h2>If I were a Metal / Mineral, what would I be and why?</h2>
+        <button onclick="generateMetalResponse()">Generate Metal / Commodity</button>
+        <div id="metalResponse" class="response"></div>
+    </div>
+
+    <script>
+        const responses = [
+                        "I'd be a flotation cell—because I always rise to the occasion and bring others up with me.",
+            "I'm a ball mill—constantly grinding, but always producing something useful.",
+            "Definitely a thickener—because I like to clarify things and bring people together.",
+            "I’d be a furnace—hot-headed under pressure, but essential for transformation!",
+            "A cyclone—because I’m fast, focused, and good at separating the fluff from the important stuff.",
+            "I’m a leach tank—quiet, patient, and always extracting value from every situation.",
+            "I’d be a filter press—because I help squeeze out the best results under pressure.",
+            "A smelter—because I bring the heat and turn chaos into something pure.",
+            "I’m a conveyor belt—always moving things forward, one step at a time.",
+            "I’d be a magnetic separator—because I attract the right elements and repel the rest!",
+            "I’m a ladle—because I’m flexible, adaptable, and always ready to pour my energy into the next task.",
+            "I'm a flotation cell—always bubbling with ideas and hard to depress.",
+            "I'd be a ball mill—my thoughts may be tumbling, but I always get results.",
+            "I'm a thickener—because I’m slow, steady, and impossible to ignore.",
+            "I’d be a furnace—my productivity peaks at 1500°C.",
+            "I'm a cyclone—I tend to stir things up and leave everything better sorted.",
+            "I’m a leach tank—because I take my sweet time but eventually get to the gold.",
+            "I’d be a filter press—because I handle all the pressure without leaking.",
+            "I'm a smelter—turning raw emotions into refined productivity.",
+            "I'm a conveyor belt—I carry everyone’s problems, but never stop moving.",
+            "I’m a magnetic separator—because I stick to what matters and ignore the rest.",
+            "I’d be a SAG mill—because I break down big problems... eventually.",
+            "I’m a rotary kiln—slowly turning up the heat until everything changes.",
+            "I’d be a surge tank—always full of surprises and never quite stable.",
+            "I'm a thickener—because I always settle the score.",
+            "I’m a flotation cell—surrounded by froth and drama, but it’s all part of the process.",
+            "I’d be a classifier—because I like to sort things out my way.",
+            "I’m a leach pad—laid back, but extracting the best over time.",
+            "I’m a belt feeder—I always bring something to the table.",
+            "I’d be a jig—because I bounce around but still get things separated.",
+            "I'm a gas scrubber—I clean up everyone else’s mess, quietly.",
+            "I'm a ball mill—I go in circles all day, and people call it “progress.”",
+            "I'd be a furnace—too hot to handle, but vital when things get tough.",
+            "I’m a dust collector—because I love gathering all the fine details.",
+            "I’d be a thickener—because my opinions always settle eventually.",
+            "I’m a spiral concentrator—always going in circles, but I end up somewhere valuable.",
+            "I’d be a pump—because I keep the flow going, even under pressure.",
+            "I'm a filter press—I don’t take nonsense, only solids.",
+            "I'm a flotation cell—I know how to keep things light and separate.",
+            "I’m a screen deck—because I shake things up and still keep it all in line.",
+            "I’m a flash smelter—fast, fiery, and occasionally out of control.",
+            "I'm a hydrocyclone—because I always spin the truth just enough to get clarity.",
+            "I’d be a kiln—slow to warm up, but unstoppable once I’m going.",
+            "I'm a vibrating screen—I’m jittery, but efficient!",
+            "I’m a thickener—I make everything around me more concentrated and intense.",
+            "I’d be a blast furnace—because I thrive on pressure, heat, and drama.",
+            "I'm a belt conveyor—because I carry the team, even on an incline.",
+            "I’m a classifier—constantly judging everything... it’s in my nature.",
+            "I’d be a gas scrubber—removing toxic vibes since day one.",
+            "I'm a mixing tank—because I bring people together… whether they like it or not.",
+            "I’m a settling basin—I need time and space to figure things out.",
+            "I'm a pebble crusher—because I don’t let the little stuff slide.",
+            "I'd be a rotary dryer—because I'm always trying to keep things cool while spinning around.",
+            "I’m a slag pot—because I carry emotional baggage like it’s molten steel.",
+            "I’d be a thickener—I take forever to reach a decision, but it’s crystal clear when I do.",
+            "I’m a vibrating feeder—because I get people going, gently.",
+            "I’m a cooling tower—because I help others chill after a meltdown.",
+            "I’d be a surge bin—because my energy levels are wildly inconsistent.",
+            "I’m a ladle—because I’m useful, reliable, and occasionally spill under pressure.",
+            "I’m a filter press—squeezing the truth out of every conversation.",
+            "I’d be a spiral classifier—because I never move in a straight line, but I still get results.",
+            "I’m a furnace—I need constant attention or I might shut down.",
+            "I’m a flotation cell—too much froth, not enough filter.",
+            "I’d be a tank agitator—I like to stir the pot.",
+            "I’m a vibrating screen—can’t sit still, but I’m great at multitasking.",
+            "I’d be a flash furnace—brief, brilliant, and occasionally explosive.",
+            "I'm a bin—because I like to keep everything inside until someone pushes my limits.",
+            "I’m a leach circuit—because I always get to the root of the issue, even if it takes days.",
+            "I’d be a regrind mill—because I believe in second chances (and finer grinds).",
+            "I’m a magnet—because I attract weird metals and weird people.",
+            "I’m a dust collector—quietly taking everything in, then vanishing at 5 p.m.",
+            "I'm a belt—because I hold things together even when it all breaks down.",
+            "I’d be a classifier—because I make snap decisions based on particle size and vibes.",
+            "I'm a vent fan—because I blow off steam professionally.",
+            "I'm a clarifier—because someone has to make sense of this slurry.",
+            "I’m a pressure vessel—full of ideas, just don’t tap the lid too hard.",
+            "I’m a heap leach pad—constantly under pressure, but slowly extracting value.",
+            "I’d be a vibrating chute—awkward, loud, and somehow necessary.",
+            "I’m a refractory lining—lowkey essential but taken for granted.",
+            "I’d be a trommel screen—constantly rotating, but still filtering the nonsense.",
+            "I’m a rotary breaker—I don’t fix things, I just make space for the good stuff.",
+            "I'm a stockpile—just trying to manage my volume without collapsing.",
+            "I’d be a mill liner—underappreciated, overworked, and always in contact with the grind.",
+            "I’m a smelter—turning toxic inputs into something useful... sometimes.",
+            "I’d be a surge tank—because I need time to buffer before reacting.",
+            "I’m a froth pump—because I thrive in bubbly situations.",
+            "I’d be a deslime screen—filtering out the unnecessary drama.",
+            "I’m a tank—emotionally, metaphorically, and literally.",
+            "I’d be a concentrator—always focusing on the important bits.",
+            "I’m a filter—constantly trying to hold back my reactions.",
+            "I’d be a plug flow reactor—because once I start something, I’m in it till the end."
+        ];
+
+        const metalResponses = [
+                        "I'd be gold—because I'm always in high demand and slightly dramatic.",
+            "I'm copper—conductive, reliable, and just a little oxidized.",
+            "I’d be lithium—tiny, reactive, and powering all your group chats.",
+            "I’m iron—strong, dependable, and slightly magnetic to chaos.",
+            "I’d be aluminum—lightweight, flexible, and a little foil-headed.",
+            "I’m nickel—never quite the star, but always in your pocket.",
+            "I’d be zinc—because I fight corrosion like I fight bad meetings.",
+            "I'm cobalt—stable under pressure, until I’m not.",
+            "I’d be uranium—glowing with potential, but please handle with care.",
+            "I’m rare earth—because I’m special, but no one really knows why.",
+            "I’d be platinum—expensive taste, low reactivity.",
+            "I’m tungsten—dense, tough, and a little hard to work with.",
+            "I’d be silver—shiny on the outside, tarnished inside.",
+            "I’m molybdenum—because I sound made-up, but I’m essential.",
+            "I’d be graphite—soft, flaky, but surprisingly useful.",
+            "I’m manganese—complex name, simple role: backup iron.",
+            "I’d be helium—not a metal, but I make everything lighter.",
+            "I'm gallium—melting under pressure, literally.",
+            "I’d be titanium—lightweight, strong, and built for awkward flexes.",
+            "I’m lead—solid, heavy, and not ideal at parties.",
+            "I'd be vanadium—rare, weird, but I make steel stronger.",
+            "I'm silicon—technically not a metal, but I’m the brains of the operation.",
+            "I’d be bauxite—rough on the outside, full of aluminum dreams.",
+            "I’m tin—undervalued but vital to keeping things together.",
+            "I’d be chrome—because I’m shiny and purely decorative.",
+            "I'm mercury—too fluid to be pinned down.",
+            "I’d be osmium—heavy, obscure, and proud of it.",
+            "I’m tellurium—never heard of me? That’s how I like it.",
+            "I’d be scandium—because I thrive in obscure alloys and niche trivia.",
+            "I’m coal—burnt out, but still powering the world somehow.",
+            "I’d be steel—structured, stressed, but built to last.",
+            "I’m niobium—low profile, high performance.",
+            "I’d be antimony—complicated and a little toxic.",
+            "I'm arsenic—definitely toxic, but misunderstood.",
+            "I’d be zinc—galvanizing people without them noticing.",
+            "I’m indium—soft, squishy, but indispensable in electronics.",
+            "I’d be rhodium—rare, expensive, and mildly overhyped.",
+            "I’m palladium—luxurious, elusive, and a bit catalytic.",
+            "I’d be cadmium—colorful, dangerous, and banned in most places.",
+            "I'm thorium—full of promise, eternally in development.",
+            "I’d be iridium—one of the rarest, just like my availability at meetings.",
+            "I’m bismuth—bright, weird, and surprisingly stable for how I look.",
+            "I’d be brass—loud, bold, and slightly off-key.",
+            "I’m stainless steel—low maintenance and resistant to bad vibes.",
+            "I’d be pyrite—because I look rich, but I’m mostly for show."
+        ];
+
+        function generateResponse() {
+            const randomIndex = Math.floor(Math.random() * responses.length);
+            document.getElementById("response").innerText = responses[randomIndex];
+        }
+
+        function generateMetalResponse() {
+            const randomIndex = Math.floor(Math.random() * metalResponses.length);
+            document.getElementById("metalResponse").innerText = metalResponses[randomIndex];
+        }
+    </script>
+
+</body>
+</html>
